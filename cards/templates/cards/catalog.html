@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1 class="catalog_title">Каталог карточек Anki для интервального повторения</h1>
+
+    <!--форма для поиска по каталогу-->
+    <div class="row">
+        <div class="col-12">
+
+            <form action="{% url 'catalog'%}" method="get" class="mb-5 mt-3">
+
+
+                <!--            Радиокнопки (sort - сортировка по параметрам: uploaddate, views, favorites)-->
+                <div class="mb-1 d-flex justify-content-end">
+                    <div><i><strong>Сортировать по:</strong></i></div>
+                    <div class="form-check ms-2">
+                        <input class="form-check-input" type="radio" name="sort" id="sortUploadDate" value="upload_date"
+                               checked>
+                        <label class="form-check-label" for="sortUploadDate">Дате публикации</label>
+                    </div>
+                    <div class="form-check ms-2">
+                        <input class="form-check-input" type="radio" name="sort" id="sortViews" value="views">
+                        <label class="form-check-label" for="sortViews">Просмотрам</label>
+                    </div>
+                    <div class="form-check ms-2">
+                        <input class="form-check-input" type="radio" name="sort" id="sortFavorites" value="favorites">
+                        <label class="form-check-label" for="sortFavorites">Избранному</label>
+                    </div>
+                </div>
+
+                <!-- Радиокнопки для выбора направления сортировки (order: порядок сортировки)
+                 ('asc' для возрастания, 'desc' для убывания; по умолчанию 'desc'). -->
+
+                <div class="mb-1 d-flex justify-content-end">
+                    <div><i><strong>Порядок сортировки:</strong></i></div>
+                    <div class="form-check ms-2">
+                        <input class="form-check-input" type="radio" name="order" id="sortOrderDesc" value="desc"
+                               checked>
+                        <label class="form-check-label" for="sortUploadDate">Убыванию</label>
+                    </div>
+                    <div class="form-check ms-2">
+                        <input class="form-check-input" type="radio" name="order" id="sortOrderAsc" value="asc">
+                        <label class="form-check-label" for="sortViews">Возрастанию</label>
+                    </div>
+                </div>
+
+                <!-- Кнопка поиска по тексту-->
+                <div class="mb-1 d-flex justify-content-end mb-2 mt-3">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Введите текст" name="search_query">
+                        <button class="btn btn-info" type="submit">Искать</button>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+
+            <p>Здесь вы можете выбрать карточки для изучения</p>
+           {% comment %} Мы обращаемся к атрибуту paginator объекта page_obj, чтобы получить общее количество карточек. {% endcomment %}
+            <p>Найдено карточек: <strong>{{ page_obj.paginator.count }}</strong></p>
+            <!--        Paginator карточек-->
+            <div class="row">
+                <div class="col-12">
+                    <nav aria-label="Page navigation" class="text-dark">
+                        <ul class="pagination justify-content-center">
+                            {% if page_obj.has_previous %}
+                            <li class="page-item pagination">
+<!--                                прописываем в теге "<а>" условия сортировки, чтобы при перемещении она сохранялась-->
+                                <a class="page-link text-white bg-info"
+                                   href="?page={{ page_obj.previous_page_number }}&sort={{ sort }}&order={{ order }}{% if search_query %}&search_query={{ search_query }}{% endif %}">Предыдущая</a>
+                            </li>
+                            {% endif %}
+
+                            {% for num in page_obj.paginator.page_range %}
+                            <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+                                <a class="page-link text-info"
+                                   href="?page={{ num }}&sort={{ sort }}&order={{ order }}{% if search_query %}&search_query={{ search_query }}{% endif %}">{{ num }}</a>
+                            </li>
+                            {% endfor %}
+
+                            {% if page_obj.has_next %}
+                            <li class="page-item"><a class="page-link text-white bg-info"
+                                                     href="?page={{ page_obj.next_page_number }}&sort={{ sort }}&order={{ order }}{% if search_query %}&search_query={{ search_query }}{% endif %}">Следующая</a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+            {% for card in cards %}
+            {% include "cards/include/card_preview.html" %}
+            {% endfor %}
+
+                </div>
+            </div>
+</div>
+{% endblock %}

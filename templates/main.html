@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% load static %}
+{% comment %} {% comment %} template/main.html шаблон, расширяющий базовый шаблон base.html {% endcomment %}
+{% block title %}Главная страница{% endblock %}
+{% block style %}{% endblock %}
+{% block content %}
+    <h1>Главная страница сайта</h1>
+    <p>Добро пожаловать на наш сайт!</p>
+    <p>На нашем сайте, карточек <span>{{ cards_count }}</span>, пользователей <span>{{ users_count }}</span>.</p>
+{% endblock %}
+{%block scripts %}{% endblock %}

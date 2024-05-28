@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% comment %} template/about.html шаблон, расширяющий базовый шаблон base.html {% endcomment %}
+{% block title %}О сайте{% endblock %}
+{% block style %}{% endblock %}
+<!--Шаблон about-->
+{% block content %}
+<h1>Проект интервального повторения</h1>
+<p>Проект интервального повторения - это проект, который помогает запоминать информацию с помощью интервального повторения.</p>
+<p>Пользователей в проекте: {{users_count}}</p>
+<p>Карточек в проекте: {{cards_count}}</p>
+{% endblock %}
+{%block scripts %}{% endblock %}

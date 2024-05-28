@@ -1,0 +1,43 @@
+{% load markdown_to_html %}
+<!--{% load static %}-->
+
+<!-- Краткое представление карточки cards/templates/cards/include/card_preview.html -->
+
+<div class="card mb-3 light">
+  <div class="row g-0">
+    <div class="col-md-3 d-flex align-items-center justify-content-center">
+
+      <div class="p-3 d-none d-md-block">
+        <i class="bi bi-question-circle-fill" style="font-size: 3rem;"></i>
+      </div>
+    </div>
+<!--    <div class="col-md-8">-->
+    <div class="col-md-9">
+      <div class="card-body">
+        <h4 class="card-title">{{ card.question }}</h4>
+        <p class="card-text"><u>Ответ:</u> {% markdown_to_html card.answer|truncatechars:100 %}</p>
+        <p class="card-text"><small class="text-muted">Категория: <b>{{ card.category }}</b></small></p>
+        <p class="card-text"><small class="text-muted">Теги:</small>
+        {% for tag in card.tags.all %}
+        <span class="badge bg-secondary"><a href="{% url 'get_cards_by_tag' tag_id=tag.pk %}" class="text-white">{{ tag.name }}</a></span>
+        {% endfor %}
+        </p>
+        <p class="card-text"><small class="text-muted">Автор: <b>{{ card.author.username|default:"неизвестен" }}</b></small></p>
+        <div class="d-flex justify-content-between align-items-center mt-2">
+          <p class="card-text"><small class="text-muted">Дата публикации:<br> {{ card.upload_date }}</small></p>
+          <div class="d-flex justify-content-around align-items-center mt-2">
+            <img class="cardviews" src="{% static 'cards/images/view.png'%}" alt="view">{{ card.views }}
+            <img class="favorite" src="{% static 'cards/images/favorit2.png'%}" alt="favorit">{{ card.adds }}
+          </div>
+        </div>
+          <!-- Кнопка детального представления -->
+            <div class="d-flex justify-content-end align-items-center mt-2">
+                <a href="{{ card.get_absolute_url}}" class="btn btn-info">Подробнее</a>
+            </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
