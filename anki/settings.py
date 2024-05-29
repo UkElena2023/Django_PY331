@@ -30,11 +30,11 @@ DEBUG = os.getenv('DEBUG')
 
 # ALLOWED_HOSTS - это список хостов, которые могут обращаться к нашему сайту
 # ALLOWED_HOSTS = ['*']
-ALLOWED_HOSTS = ['ukelena2023-django-py331-e8c4.twc1.net', 'www.ukelena2023-django-py331-e8c4.twc1.net',
+ALLOWED_HOSTS = ['ukelena2023-django-py331-c32b.twc1.net', 'www.ukelena2023-django-py331-c32b.twc1.net',
                  'localhost', '127.0.0.1']
 
 # CSRF_TRUSTED_ORIGINS - это список доменов, с которых можно отправлять POST-запросы без токена CSRF
-CSRF_TRUSTED_ORIGINS = ['https://ukelena2023-django-py331-e8c4.twc1.net', 'https://www.ukelena2023-django-py331-e8c4.twc1.net']
+CSRF_TRUSTED_ORIGINS = ['https://ukelena2023-django-py331-c32b.twc1.net', 'https://www.ukelena2023-django-py331-c32b.twc1.net']
 
 # INTERNAL_IPS  - это список IP-адресов, с которых можно получить доступ к отладочной панели Django
 if DEBUG:
