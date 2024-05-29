@@ -30,7 +30,8 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = os.getenv('DEBUG')
 
 # ALLOWED_HOSTS - это список хостов, которые могут обращаться к нашему сайту
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['ukelena2023-django-py331-e8c4.twc1.net', 'www.ukelena2023-django-py331-e8c4.twc1.net', 'localhost', '127.0.0.1']
 
 
 # INTERNAL_IPS  - это список IP-адресов, с которых можно получить доступ к отладочной панели Django
