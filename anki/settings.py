@@ -31,7 +31,7 @@ DEBUG = os.getenv('DEBUG')
 
 # ALLOWED_HOSTS - это список хостов, которые могут обращаться к нашему сайту
 ALLOWED_HOSTS = []
-# ALLOWED_HOSTS = ['pydeck.ru', 'www.pydeck.ru', 'localhost', '127.0.0.1']
+
 
 # INTERNAL_IPS  - это список IP-адресов, с которых можно получить доступ к отладочной панели Django
 if DEBUG:
@@ -160,7 +160,7 @@ AUTH_USER_MODEL = 'users.User'
 
 # для подключения медиа файлов
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-# MEDIA_ROOT = BASE_DIR / 'media'
+
 # маршрут для медиа файлов
 MEDIA_URL = '/media/'
 
