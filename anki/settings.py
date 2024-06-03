@@ -177,3 +177,6 @@ EMAIL_USE_SSL = True
 DEFAULT_FROM_EMAIL = os.getenv('EMAIL_HOST_USER')
 SERVER_EMAIL = os.getenv('EMAIL_HOST_USER')
 EMAIL_ADMIN = os.getenv('EMAIL_HOST_USER')
+# Конфигурация для отправки уведомлений в Telegram
+TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+YOUR_PERSONAL_CHAT_ID = os.getenv("YOUR_PERSONAL_CHAT_ID")

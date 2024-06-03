@@ -2,7 +2,15 @@
 {% load static %}
 {% block content_profile %}
 <h2>Мои карточки</h2>
-{% comment %} ТУТ Карточки {% endcomment %} 
+
+{% comment %} кнопка с маршрутом на добавление карточки {% endcomment %}
+<div class="d-flex justify-content-end align-items-center mt-2 mb-3">
+    <a href="{% url 'add_card' %}" class="btn btn-info"><i class="bi bi-plus-circle me-2"></i>Создать карточку
+        </a>
+</div>
+
+
+{% comment %} Здесь карточки созданные пользователем {% endcomment %}
 {% for card in cards %} 
 {%include "cards/include/card_preview.html" %}
 {% endfor %}

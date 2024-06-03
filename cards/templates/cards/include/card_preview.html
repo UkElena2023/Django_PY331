@@ -22,7 +22,14 @@
         <span class="badge bg-secondary"><a href="{% url 'get_cards_by_tag' tag_id=tag.pk %}" class="text-white">{{ tag.name }}</a></span>
         {% endfor %}
         </p>
-        <p class="card-text"><small class="text-muted">Автор: <b>{{ card.author.username|default:"неизвестен" }}</b></small></p>
+        <div class="d-flex justify-content-start align-items-center mt-2">
+      <p class="card-text"><small class="text-muted">Автор: <b>{{ card.author.username|default:"неизвестен" }}</b></small></p>
+
+      {% comment %} здесь в шаблоне даем отображение карандаша для редактирования карточки только зарегистрирвоанным пользвателям и с правом редактирования {% endcomment %}
+      {% if perms.cards.change_card or user == card.author %}
+        <a href="{% url 'edit_card' card.pk %}" ><i class="bi bi-pencil-square ms-2"></i></a>
+          {% endif %}
+      </div>
         <div class="d-flex justify-content-between align-items-center mt-2">
           <p class="card-text"><small class="text-muted">Дата публикации:<br> {{ card.upload_date }}</small></p>
           <div class="d-flex justify-content-around align-items-center mt-2">

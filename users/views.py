@@ -91,6 +91,9 @@ class ProfileUser(MenuMixin, LoginRequiredMixin, UpdateView):
 
     def get_object(self, queryset=None):
         # Возвращает объект модели, который должен быть отредактирован
+        user = self.request.user
+        if user.groups.filter(name='Модераторы').exists():
+            user.moderator = True
         return self.request.user
 
 

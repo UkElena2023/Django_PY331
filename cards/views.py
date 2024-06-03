@@ -15,7 +15,7 @@ from django.views.generic.list import ListView
 from .forms import CardForm
 from .models import Card
 from django.views.decorators.cache import cache_page
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 
 info = {
@@ -246,11 +246,12 @@ class AddCardCreateView(MenuMixin, LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class EditCardUpdateView(MenuMixin, LoginRequiredMixin, UpdateView):
+class EditCardUpdateView(MenuMixin, LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     """
     Класс для редактирования карточек в каталоге.
     Используется класс-миксин MenuMixin для добавления меню в контекст шаблона страницы для редактирования карточки.
-    Используется класс-миксин LoginRequiredMixin для контроля действий незарегистрированного пользователя
+    Используется класс-миксин LoginRequiredMixin для контроля действий незарегистрированного пользователя.
+    Используется класс-миксин UserPassesTestMixin для контроля прав пользователя
     """
     # Указываем модель, с которой работает представление
     model = Card
@@ -262,6 +263,21 @@ class EditCardUpdateView(MenuMixin, LoginRequiredMixin, UpdateView):
     context_object_name = 'card'
     # URL для перенаправления на страницу Каталога после успешного редактирования карточки
     success_url = reverse_lazy('catalog')
+    # Указываем право, которое должен иметь пользователь для доступа к представлению
+    permission_required = 'cards.change_card'
+
+    def test_func(self):
+        """
+        Метод для проверки прав пользователя и доступа к представлению редактирования карточки
+        :return:
+        """
+        card = self.get_object()
+        user = self.request.user
+        is_moderator = user.groups.filter(name='Модераторы').exists()
+        is_administrator = user.is_superuser
+        # is_superuser - это булево поле, которое указывает, является ли пользователь суперпользователем
+        # is_staff - это булево поле, которое указывает, имеет ли пользователь доступ к административной панели
+        return user == card.author or is_moderator or is_administrator
 
 
 class CardDeleteView(MenuMixin, LoginRequiredMixin, DeleteView):

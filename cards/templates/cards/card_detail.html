@@ -18,14 +18,23 @@
       <span class="badge bg-secondary"> <a href="{% url 'get_cards_by_tag' tag_id=tag.pk %}" class="text-white">{{ tag.name }}</a></span>
       {% endfor %}
       </p>
+      <div class="d-flex justify-content-start align-items-center mt-2">
       <p class="card-text"><small class="text-muted">Автор: <b>{{ card.author.username|default:"неизвестен" }}</b></small></p>
-      <p class="card-text"><small class="text-muted">Номер карточки:</small> {{ card.pk }}</p>
 
-      <div class="d-flex justify-content-end align-items-center mt-2">
+      {% comment %} здесь в шаблоне даем отображение карандаша для редактирования карточки только зарегистрирвоанным пользвателям и с правом редактирования {% endcomment %}
+      {% if perms.cards.change_card or user == card.author %}
+        <a href="{% url 'edit_card' card.pk %}" ><i class="bi bi-pencil-square ms-2"></i></a>
+          {% endif %}
+      </div>
+<!--      <p class="card-text"><small class="text-muted">Номер карточки:</small> {{ card.pk }}</p>-->
+
+      <div class="d-flex justify-content-between align-items-center mt-2">
         <small class="text-muted">Дата публикации: {{ card.upload_date }}</small>
+          <div class="d-flex justify-content-around align-items-center mt-2">
         <img src="{% static 'cards/images/view.png'%}" alt="view">{{ card.views }}
         <img src="{% static 'cards/images/favorit2.png'%}" alt="favorit">{{ card.adds }}
       </div>
+        </div>
 
       <div class="d-flex justify-content-start align-items-center mt-2">
         <a href="{% url 'catalog' %}" class="btn btn-info">Вернуться к каталогу</a>
